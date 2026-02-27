@@ -1,0 +1,140 @@
+# =============================================================================
+# ZSH Configuration - Managed by chezmoi, Plugins via Nix
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Path & Environment
+# -----------------------------------------------------------------------------
+typeset -U path cdpath fpath manpath
+
+export PYENV_ROOT="$HOME/.local/share/pyenv"
+[[ -d $PYENV_ROOT/bin ]] && path=("$PYENV_ROOT/bin" $path)
+export GPG_TTY=$TTY
+export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzf/config"
+
+# Nix profile paths
+NIX_PROFILE="/etc/profiles/per-user/$USER"
+NIX_ZSH_PLUGINS="$NIX_PROFILE/share/zsh/plugins"
+
+# -----------------------------------------------------------------------------
+# History
+# -----------------------------------------------------------------------------
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE="$HOME/.zsh_history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+setopt HIST_FCNTL_LOCK
+setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt SHARE_HISTORY
+
+unsetopt APPEND_HISTORY
+unsetopt HIST_EXPIRE_DUPS_FIRST
+unsetopt HIST_FIND_NO_DUPS
+unsetopt HIST_IGNORE_ALL_DUPS
+unsetopt HIST_SAVE_NO_DUPS
+
+# -----------------------------------------------------------------------------
+# Completions (from Nix)
+# -----------------------------------------------------------------------------
+# Add Nix zsh completions to fpath
+fpath+=("$NIX_PROFILE/share/zsh/site-functions")
+fpath+=("$NIX_PROFILE/share/zsh/5.9/functions")
+
+autoload -Uz compinit && compinit
+
+# -----------------------------------------------------------------------------
+# Plugins (installed via Nix)
+# -----------------------------------------------------------------------------
+# Helper to source first matching file from glob pattern
+_source_nix_plugin() {
+  emulate -L zsh
+  setopt GLOB_SUBST NULL_GLOB
+  local pattern="$1"
+  local files=($pattern)
+  [[ ${#files[@]} -gt 0 && -f "${files[1]}" ]] && source "${files[1]}"
+}
+
+# FZF-Tab (must be loaded before compinit is called, but after fpath setup)
+_source_nix_plugin '/nix/store/*-zsh-fzf-tab-*/share/fzf-tab/fzf-tab.plugin.zsh'
+
+# Zsh Autosuggestions
+[[ -f "$NIX_ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+  source "$NIX_ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+# You Should Use
+[[ -f "$NIX_ZSH_PLUGINS/you-should-use/you-should-use.plugin.zsh" ]] && \
+  source "$NIX_ZSH_PLUGINS/you-should-use/you-should-use.plugin.zsh"
+
+# Preview command for fzf-tab
+preview_ls_cmd="eza -a --level=1 --tree --icons --group-directories-first --git-ignore -I '.DS_Store|.localized' --color=always"
+
+zstyle ':fzf-tab:complete:*' fzf-flags $(echo $FZF_DEFAULT_OPTS)
+zstyle ':fzf-tab:complete:code:*' fzf-preview 'bat $realpath 2>/dev/null ||' $preview_ls_cmd '$realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview $preview_ls_cmd '$realpath'
+
+# -----------------------------------------------------------------------------
+# Tool Initialization
+# -----------------------------------------------------------------------------
+# Starship prompt
+command -v starship &>/dev/null && eval "$(starship init zsh)"
+
+# Zoxide (cd replacement)
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh --cmd cd)"
+
+# Pyenv
+command -v pyenv &>/dev/null && eval "$(pyenv init - zsh)"
+
+# FZF keybindings and completion
+if [[ $options[zle] = on ]]; then
+  command -v fzf &>/dev/null && source <(fzf --zsh)
+fi
+
+# GPG agent
+command -v gpg-connect-agent &>/dev/null && \
+  gpg-connect-agent --quiet updatestartuptty /bye > /dev/null
+
+# Ghostty shell integration
+if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+  source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
+fi
+
+# -----------------------------------------------------------------------------
+# Aliases
+# -----------------------------------------------------------------------------
+# System
+alias build='sudo darwin-rebuild switch --flake ~/.config/wagounix#sap'
+alias vpn='sudo openvpn --config ~/.openvpn/home.ovpn'
+
+# Eza (ls replacement)
+alias eza='eza --tree --level=1 --icons always --color always --git --group-directories-first --git-ignore -I ".DS_Store|.localized"'
+alias ls='eza'
+alias la='eza -a'
+alias ll='eza -l'
+alias lla='eza -la'
+
+# Git
+alias ga='git add .'
+alias gb='git branch'
+alias gc='git commit -m'
+alias gco='git checkout'
+alias gp='git push'
+alias gl='git pull'
+
+# Python
+alias python='python3'
+
+# -----------------------------------------------------------------------------
+# Syntax Highlighting (MUST be sourced last)
+# -----------------------------------------------------------------------------
+_source_nix_plugin '/nix/store/*-zsh-syntax-highlighting-*/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+
+# Catppuccin Mocha theme (must be after syntax highlighting)
+_source_nix_plugin '/nix/store/*-catppuccin-zsh-syntax-highlighting-*/catppuccin_mocha-zsh-syntax-highlighting.zsh'
+
+# Cleanup
+unfunction _source_nix_plugin

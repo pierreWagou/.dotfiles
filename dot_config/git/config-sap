@@ -1,0 +1,8 @@
+# =============================================================================
+# Git Config - SAP Work Profile
+# =============================================================================
+# Included when working in ~/Repositories/sap/
+
+[user]
+    email = pierre.romon@sap.com
+    signingkey = B662CC76CE0DF9D3
