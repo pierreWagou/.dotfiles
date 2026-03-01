@@ -20,7 +20,7 @@ Personal configuration files for macOS, managed with [chezmoi](https://chezmoi.i
 ## Tools
 
 | Config | Description |
-|--------|-------------|
+| -------- | ------------- |
 | [dot_config/git/](dot_config/git/) | Git config with separate work (SAP) profile |
 | [dot_config/fzf/config](dot_config/fzf/config) | FZF fuzzy finder (Catppuccin Mocha theme) |
 | [dot_config/bat/config](dot_config/bat/config) | Bat (cat replacement) |
