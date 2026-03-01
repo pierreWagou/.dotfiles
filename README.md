@@ -5,6 +5,7 @@ Personal configuration files for macOS, managed with [chezmoi](https://chezmoi.i
 ## Shell
 
 **[dot_zshrc](dot_zshrc)** - Zsh configuration
+
 - Plugins via Nix: fzf-tab, zsh-autosuggestions, zsh-syntax-highlighting, zsh-you-should-use
 - Starship prompt, Zoxide (cd replacement), Pyenv
 - Catppuccin Mocha syntax highlighting theme
@@ -30,14 +31,17 @@ Personal configuration files for macOS, managed with [chezmoi](https://chezmoi.i
 ## AI & Development
 
 **[dot_claude/settings.json.tmpl](dot_claude/settings.json.tmpl)** - Claude Code settings
+
 - Auth token pulled from Dashlane
 
 **[dot_databrickscfg.tmpl](dot_databrickscfg.tmpl)** - Databricks workspaces
+
 - Tokens pulled from Dashlane (test, prod)
 
 ## Security
 
 **[dot_gnupg/](dot_gnupg/)** - GPG configuration
+
 - `gpg.conf` - Algorithm preferences, security settings
 - `gpg-agent.conf` - SSH support, pinentry-mac
 - `keys/` - Public keys (personal + SAP)
