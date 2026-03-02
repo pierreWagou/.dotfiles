@@ -2,6 +2,19 @@
 
 Personal configuration files for macOS, managed with [chezmoi](https://chezmoi.io/).
 
+## 📦 Installation
+
+### Prerequisites
+
+- 🏠 chezmoi installed via [wagounix flake](https://github.com/pierreWagou/wagounix)
+
+### Setup
+
+```bash
+# Clone the repository and apply configuration
+chezmoi init --apply pierreWagou
+```
+
 ## 🐚 Shell
 
 **[dot_zshrc](dot_zshrc)** - Zsh configuration
