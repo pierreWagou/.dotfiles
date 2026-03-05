@@ -1,0 +1,31 @@
+# =============================================================================
+# Chezmoi Ignore - Files to exclude from apply
+# =============================================================================
+# Documentation: https://www.chezmoi.io/reference/special-files-and-directories/chezmoiignore/
+
+# Documentation files
+README.md
+LICENSE*
+CHANGELOG*
+*.md
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# Development files
+.editorconfig
+.vscode/
+.idea/
+
+# macOS system files
+.DS_Store
+.localized
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
