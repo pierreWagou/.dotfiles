@@ -42,6 +42,9 @@ fi
 # Plugin configurations
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
+# Fast Syntax Highlighting - Catppuccin Mocha theme
+fast-theme XDG:catppuccin-mocha &>/dev/null
+
 # FZF-Tab preview settings
 preview_ls_cmd="eza -a --level=1 --tree --icons --group-directories-first --git-ignore -I '.DS_Store|.localized' --color=always"
 

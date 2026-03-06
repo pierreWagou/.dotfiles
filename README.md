@@ -19,7 +19,7 @@ chezmoi init --apply pierreWagou
 
 **[dot_zshrc](dot_zshrc)** - Zsh configuration
 
-- Plugins via Sheldon: fzf-tab, zsh-autosuggestions, zsh-syntax-highlighting, zsh-you-should-use
+- Plugins via Sheldon: fzf-tab, zsh-autosuggestions, fast-syntax-highlighting, zsh-you-should-use
 - Starship prompt, Zoxide (cd replacement), Pyenv
 - 🎨 Catppuccin Mocha syntax highlighting theme
 - Git aliases, eza (ls replacement)
