@@ -7,13 +7,18 @@
 # XDG Base Directory Specification
 # -----------------------------------------------------------------------------
 # Set Zsh configuration directory
-export ZDOTDIR="$HOME/.config/zsh"
+export XDG_CONFIG_HOME="$HOME/.config"
+
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 # Set Docker configuration directory
-export DOCKER_CONFIG="$HOME/.config/docker"
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 
 # Set FZF configuration file path
-export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzf/config"
+export FZF_DEFAULT_OPTS_FILE="$XDG_CONFIG_HOME/fzf/config"
+
+# Set Eza configuration file path
+export EZA_CONFIG_DIR="$XDG_CONFIG_HOME/eza"
 
 # -----------------------------------------------------------------------------
 # Path Configuration
