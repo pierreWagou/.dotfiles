@@ -20,6 +20,4 @@ windows:
   - wagou-prime:
       panes:
         - ssh wagou-prime
-  - aoe:
-      panes:
-        - aoe
+

@@ -10,9 +10,9 @@ requirements = ["sesh", "fd"]
 # Multiple source commands for cycling through different modes
 # Press Ctrl+S to cycle between sources
 command = [
-  { name = "Active",  run = "sesh list -t --icons 2>/dev/null | grep -v 'aoe_'" },
-  { name = "Configs", run = "sesh list -c --icons | grep -v '^aoe_'" },
-  { name = "Zoxide",  run = "sesh list -z --icons | grep -v '^aoe_'" },
+  { name = "Active",  run = "sesh list -t --icons 2>/dev/null" },
+  { name = "Configs", run = "sesh list -c --icons" },
+  { name = "Zoxide",  run = "sesh list -z --icons" },
 ]
 ansi = true
 frecency = false # handled by sesh

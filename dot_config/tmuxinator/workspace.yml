@@ -27,6 +27,3 @@ windows:
       panes:
         - mprocs
 <% end %>
-  - aoe:
-      panes:
-        - aoe
