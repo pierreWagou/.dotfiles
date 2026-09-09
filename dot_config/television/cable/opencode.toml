@@ -1,0 +1,28 @@
+# Television channel for OpenCode session management
+# Shows sessions scoped to current directory
+# Used via tmux prefix+o to resume or create sessions
+
+[metadata]
+name = "opencode"
+description = "OpenCode sessions — resume or create"
+requirements = ["opencode", "jq"]
+
+[source]
+command = "opencode session list --format json | jq -r '.[] | \"\\(.id)\\t\\(.title // .id)\"'"
+
+[ui]
+input_header = " OpenCode Sessions"
+
+[keybindings]
+enter = "actions:resume"
+ctrl-n = "actions:new"
+
+[actions.resume]
+description = "Resume selected session"
+command = "opencode attach --session '{split:\\t:0}' http://localhost:4096"
+mode = "fork"
+
+[actions.new]
+description = "Create new session"
+command = "opencode attach http://localhost:4096"
+mode = "fork"
