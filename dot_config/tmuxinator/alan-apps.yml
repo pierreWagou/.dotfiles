@@ -18,7 +18,7 @@ windows:
             - /run/current-system/sw/bin/tmux split-window -v -t .1 -l 25% -d
             - >-
                 /run/current-system/sw/bin/tmux send-keys -t .2 'clear' Enter
-            - opencode attach http://localhost:4096
+            - tmux send-keys -t .1 'opencode attach http://localhost:4096' Enter
             - nvim
   - services:
       panes:
