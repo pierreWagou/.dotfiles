@@ -146,7 +146,6 @@ vimcmd_replace_symbol = "[❮](bold flamingo)"
 vimcmd_visual_symbol = "[❮](bold yellow)"
 
 
-
 [custom.chezmoi]
 description = "Chezmoi source directory indicator"
 command = ""

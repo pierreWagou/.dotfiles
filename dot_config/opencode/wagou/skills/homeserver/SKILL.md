@@ -84,3 +84,44 @@ _: {
 - No home-manager — user dotfiles are managed by chezmoi separately
 - Always `nixos-rebuild build` first to test, then `switch` to activate
 - Load the wagounix project's own AGENTS.md when working inside `~/Projects/wagou/wagounix` for full structural details
+
+## Disaster recovery — wagou-clone as warm standby
+
+wagou-clone runs the same NixOS config as wagou-prime. Most services are enabled but Home Assistant is **disabled by default** to avoid ZHA coordinator conflicts.
+
+### When to failover
+
+If wagou-prime is down and needs recovery, follow these steps on wagou-clone:
+
+### Failover procedure
+
+```bash
+# 1. SSH into wagou-clone
+ssh wagou-clone
+
+# 2. Start Home Assistant
+sudo systemctl start home-assistant.service
+
+# 3. Update Cloudflare DNS — point *.wagou.fr to wagou-clone's public IP
+#    (via Cloudflare dashboard or API)
+
+# 4. Verify services are running
+podman ps --format '{{.Names}} {{.Status}}'
+```
+
+### Revert (when wagou-prime is back)
+
+```bash
+# 1. Update Cloudflare DNS — point *.wagou.fr back to wagou-prime's public IP
+
+# 2. Stop Home Assistant on wagou-clone
+ssh wagou-clone "sudo systemctl stop home-assistant.service"
+
+# 3. Restart ZHA on wagou-prime if needed
+```
+
+### Accessing wagou-clone during normal operation
+
+- **At home:** `http://192.168.68.62:8123` (direct IP, HTTP only — port 8123 is firewalled on LAN, use SSH tunnel instead)
+- **SSH tunnel:** `ssh -L 8123:localhost:8123 wagou-clone` then `http://localhost:8123`
+- **Remote:** Tailscale IP `100.81.107.72` (requires Tailscale running on both machines)

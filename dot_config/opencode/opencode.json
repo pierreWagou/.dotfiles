@@ -33,7 +33,8 @@
   "plugin": [
     "@tarquinen/opencode-dcp",
     "opencode-mermaid-renderer",
-    "opencode-notify"
+    "opencode-notify",
+    "@plannotator/opencode@latest"
   ],
   "mcp": {
     "context7": {
